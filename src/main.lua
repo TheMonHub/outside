@@ -6,6 +6,9 @@ if gameLog == nil then
     return
 end
 gameLog.info("Initializing...")
+function love.quit()
+    gameLog.info("Exiting...")
+end
 
 if (love.filesystem.isFused() == false) then -- Unsupported
     gameLog.error("Game must be in fused mode!")
@@ -22,18 +25,21 @@ else
     end
 end
 
-local nativefs = require("extern.nativefs")
-local gameText = require("text.main")
-
 do
-    local cIsThebest = love.filesystem.newFile(gameSourceDirMntPoint .. gameResourceDir .. "theultimatec.png")
-    local canIhavC, _ = cIsThebest:open("r")
+    local canIhavC, _ = love.filesystem.newFile(gameSourceDirMntPoint .. gameResourceDir .. "theultimatec.png", "r")
     if not canIhavC then
         love.event.quit(67) -- I'm sorry
         return
     end
-    cIsThebest:release()
+    canIhavC:release()
 end
+
+-- INIT END
+
+local nativefs = require("extern.nativefs")
+local gameWindow = require("window.main")
+
+-- MODULE INIT END
 
 function love.load()
     windowWidth, windowHeight = love.graphics.getDimensions()
@@ -41,13 +47,14 @@ function love.load()
     gameLog.info("Initialized!")
     gameLog.info("Game Root: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint))
     gameLog.info("Game Resources: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint) .. gameResourceDir)
+    love.window.setPosition(gameWindow.positionX, gameWindow.positionY)
 end
 
 function love.update(dt)
-    love.window.setPosition(0, 0)
+
+    love.window.setPosition(gameWindow.positionX, gameWindow.positionY)
 end
 
 function love.draw()
     love.graphics.translate(windowCenterX, windowCenterY)
-    gameText.print("Hello World!", 0, 0)
 end
