@@ -1,8 +1,6 @@
 local module = {}
 
-local defaultFont
-
-function module.init()
+local defaultFont do
     defaultFont = love.graphics.newFont("fonts/edit-undo.brk.ttf", 20, "mono")
     module.defaultFont = defaultFont
 
@@ -19,7 +17,5 @@ function module.print(content, positionX, positionY)
         )
     end
 end
-
-module.init()
 
 return module
