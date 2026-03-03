@@ -1,5 +1,5 @@
 ﻿gameSourceDirMntPoint = "gameSourceDir"
-gameResourceDir = "res"
+gameResourceDir = "/res/"
 
 local gameLog = require("log.main")
 if gameLog == nil then
@@ -26,7 +26,7 @@ local nativefs = require("extern.nativefs")
 local gameText = require("text.main")
 
 do
-    local cIsThebest = love.filesystem.newFile(gameSourceDirMntPoint .. "/" .. gameResourceDir .. "/theultimatec.png")
+    local cIsThebest = love.filesystem.newFile(gameSourceDirMntPoint .. gameResourceDir .. "theultimatec.png")
     local canIhavC, _ = cIsThebest:open("r")
     if not canIhavC then
         love.event.quit(67) -- I'm sorry
@@ -39,7 +39,8 @@ function love.load()
     windowWidth, windowHeight = love.graphics.getDimensions()
     windowCenterX, windowCenterY = windowWidth / 2, windowHeight / 2
     gameLog.info("Initialized!")
-    gameLog.info("Game save: " .. love.filesystem.getSaveDirectory())
+    gameLog.info("Game Root: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint))
+    gameLog.info("Game Resources: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint) .. gameResourceDir)
 end
 
 function love.update(dt)
