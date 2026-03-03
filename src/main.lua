@@ -1,5 +1,9 @@
 ﻿gameSourceDirMntPoint = "gameSourceDir"
-gameResourceDir = "/res/"
+gameResourceDir = gameSourceDirMntPoint .. "/res/"
+
+windowWidth, windowHeight = 800, 600
+windowCenterX, windowCenterY = windowWidth / 2, windowHeight / 2
+screenSizeX, screenSizeY = love.window.getDesktopDimensions()
 
 local gameLog = require("log.main")
 if gameLog == nil then
@@ -26,7 +30,7 @@ else
 end
 
 do
-    local canIhavC, _ = love.filesystem.newFile(gameSourceDirMntPoint .. gameResourceDir .. "theultimatec.png", "r")
+    local canIhavC, _ = love.filesystem.newFile(gameResourceDir .. "theultimatec.png", "r")
     if not canIhavC then
         love.event.quit(3) -- We CANNOT live without C
         return
@@ -43,16 +47,14 @@ local render = require("render.main")
 -- MODULE INIT END
 
 function love.load()
-    windowWidth, windowHeight = love.graphics.getDimensions()
-    windowCenterX, windowCenterY = windowWidth / 2, windowHeight / 2
     translateX, translateY = 0, 0
-    screenSizeX, screenSizeY = love.window.getDesktopDimensions()
     playAreaScale = math.min(
             screenSizeX  / windowWidth,
             screenSizeY / windowHeight
     )
     playAreaX, playAreaY = windowWidth * playAreaScale, windowHeight * playAreaScale
     playAreaHalfX, playAreaHalfY = playAreaX / 2, playAreaY / 2
+
     gameLog.info("Initialized!")
     gameLog.info("Game Root: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint))
     gameLog.info("Game Resources: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint) .. gameResourceDir)
@@ -64,6 +66,7 @@ function love.load()
 end
 
 function love.update(dt)
+    render.updateWin()
     render.update(dt)
     scenery:update(dt)
 end
