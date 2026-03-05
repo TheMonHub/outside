@@ -12,39 +12,22 @@ function game:load(args)
         return
     end
     require("render.setup")
+    render.winX = screenSizeX / 2 - windowCenterX
+    render.winY = screenSizeY / 2 - windowCenterY
     if require("debug.skip_intro") == true then
         self.setScene("menu")
         return
+    else
+        self.setScene("intro")
     end
-
-    text = require("text.main")
-    render.winX = screenSizeX / 2 - windowCenterX
-    render.winY = screenSizeY / 2 - windowCenterY
-    render.update()
 end
 
-local frame = 0
 function game:draw()
-    love.graphics.setColor(0,0,0,1)
-    love.graphics.rectangle("fill", -400, -300, 800, 600)
-    love.graphics.setColor(1,1,1,(frame - 0.9) * 10)
-    if frame < 0.9 then
-        return
-    end
-    text.print("Made By", 0, -40, 1.5 * frame)
-    text.print("TheMonHub", 0, 20, 3.75 * frame)
+
 end
 
-local endTimer = 0
-local oldFrame
 function game:update(dt)
-    oldFrame = frame
-    if endTimer >= 3 and frame >= 0.9 then
-        self.setScene("menu")
-        return
-    end
-    endTimer = endTimer + dt
-    frame = ease.circleEaseOut(1, oldFrame, 2, dt)
+
 end
 
 return game

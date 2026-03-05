@@ -7,24 +7,30 @@ if logFile == nil then
     love.event.quit(3)
     return
 end
-print("Log will be saved to: " .. love.filesystem.getSaveDirectory() .. "/" .. logFilePath)
+print("Log will be saved to: " .. love.filesystem.getSaveDirectory() .. "\\" .. logFilePath)
 
 function module.info(content)
-    local s, e = logFile:write("[INFO] " .. content .. "\r\n")
+    local contentF = "[INFO] " .. content .. "\r\n"
+    print(contentF)
+    local s, e = logFile:write(contentF)
     if s == false then
         print("Failed to log:".. e)
     end
 end
 
 function module.warn(content)
-    local s, e = logFile:write("[!WARN] " .. content .. "\r\n")
+    local contentF = "[!WARN] " .. content .. "\r\n"
+    print(contentF)
+    local s, e = logFile:write(contentF)
     if s == false then
         print("Failed to log:".. e)
     end
 end
 
 function module.error(content)
-    local s, e = logFile:write("[!!ERROR] " .. content .. "\r\n")
+    local contentF = "[!!ERROR] " .. content .. "\r\n"
+    print(contentF)
+    local s, e = logFile:write(contentF)
     if s == false then
         print("Failed to log:".. e)
     end

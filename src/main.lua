@@ -49,19 +49,19 @@ local render = require("render.main")
 function love.load()
     gameLog.info("Initialized!")
     gameLog.info("Game Root: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint))
-    gameLog.info("Game Resources: " .. love.filesystem.getRealDirectory(gameSourceDirMntPoint) .. gameResourceDir)
+    gameLog.info("Game Resources: " .. love.filesystem.getRealDirectory(gameResourceDir) .. "\\res")
 
     render.update()
     scenery:load()
 end
 
 function love.update(dt)
-    render.update()
+    render.update(dt)
     scenery:update(dt)
 end
 
 function love.draw()
-    love.graphics.setBackgroundColor(1,0,1,1)
+    love.graphics.setBackgroundColor(0,0,0,1)
     love.graphics.translate(windowCenterX, windowCenterY)
     scenery:draw()
 end
